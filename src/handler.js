@@ -8,8 +8,6 @@ const addBookHandler = (request, h) => {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku',
-      data: {
-      },
     });
     response.code(400);
     return response;
@@ -50,19 +48,12 @@ const addBookHandler = (request, h) => {
       status: 'success',
       message: 'Buku berhasil ditambahkan',
       data: {
-        BookId: id,
+        bookId: id,
       },
     });
     response.code(201);
     return response;
   }
- 
-  const response = h.response({
-    status: 'fail',
-    message: 'Buku gagal ditambahkan',
-  });
-  response.code(500);
-  return response;
 };
 
 const getAllbooksHandler = () => ({
