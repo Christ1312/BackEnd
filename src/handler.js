@@ -143,6 +143,13 @@ const editBookByIdHandler = (request, h) => {
     response.code(200);
     return response;
   }
+
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Id tidak ditemukan',
+    });
+    response.code(404);
+    return response;
 };
 
 const deleteBookByIdHandler = (request, h) => {
