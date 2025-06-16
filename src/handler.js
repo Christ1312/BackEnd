@@ -76,7 +76,7 @@ if (Book !== undefined) {
     return {
       status: 'success',
       data: {
-        Book,
+        book: Book,
       },
     };
   }
@@ -92,7 +92,16 @@ if (Book !== undefined) {
 const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
  
-  const { title, tags, body } = request.payload;
+  const { 
+    name, 
+    year, 
+    author, 
+    summary, 
+    publisher, 
+    pageCount, 
+    readPage, 
+    reading, 
+  } = request.payload;
   const updatedAt = new Date().toISOString();
  
   const index = books.findIndex((Book) => Book.id === bookId);
@@ -100,9 +109,14 @@ const editBookByIdHandler = (request, h) => {
   if (index !== -1) {
     books[index] = {
       ...books[index],
-      title,
-      tags,
-      body,
+      name, 
+      year, 
+      author, 
+      summary, 
+      publisher, 
+      pageCount, 
+      readPage, 
+      reading,
       updatedAt,
     };
  
@@ -114,12 +128,21 @@ const editBookByIdHandler = (request, h) => {
     return response;
   }
  
-  const response = h.response({
-    status: 'fail',
-    message: 'Gagal memperbarui Buku. Id tidak ditemukan',
-  });
-  response.code(404);
-  return response;
+  if (name === undefined) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Mohon isi nama buku',
+    });
+    response.code(400);
+    return response;
+  } else if (readPage > pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+    });
+    response.code(400);
+    return response;
+  }
 };
 
 const deleteBookByIdHandler = (request, h) => {
