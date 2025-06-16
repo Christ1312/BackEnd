@@ -4,7 +4,7 @@ const books = require('./books.js');
 const addBookHandler = (request, h) => {
   const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
 
-  if (!name) {
+  if (name === undefined) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku',
@@ -59,8 +59,12 @@ const addBookHandler = (request, h) => {
 const getAllbooksHandler = () => ({
   status: 'success',
   data: {
-    books,
-  },
+    books: books.map((book) => ({
+      id: book.id,
+      name: book.name,
+      publisher: book.publisher,
+    }))
+  }
 });
 
 const getBookByIdHandler = (request, h) => {
