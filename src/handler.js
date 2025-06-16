@@ -70,7 +70,7 @@ const getAllbooksHandler = () => ({
 const getBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
  
-  const Book = books.filter((n) => n.id === id)[0];
+  const Book = books.filter((n) => n.id === bookId)[0];
  
 if (Book !== undefined) {
     return {
@@ -95,7 +95,7 @@ const editBookByIdHandler = (request, h) => {
   const { title, tags, body } = request.payload;
   const updatedAt = new Date().toISOString();
  
-  const index = books.findIndex((Book) => Book.id === id);
+  const index = books.findIndex((Book) => Book.id === bookId);
  
   if (index !== -1) {
     books[index] = {
@@ -125,7 +125,7 @@ const editBookByIdHandler = (request, h) => {
 const deleteBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
  
-  const index = books.findIndex((Book) => Book.id === id);
+  const index = books.findIndex((Book) => Book.id === bookId);
  
   if (index !== -1) {
     books.splice(index, 1);
